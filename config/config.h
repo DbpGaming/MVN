@@ -1,0 +1,1 @@
+#define WINDOW_TITLE "Modern Visual Novel Engine"
