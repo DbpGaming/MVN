@@ -12,7 +12,7 @@ DEPS := $(OBJS:.o=.d)
 
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CFLAGS   += ${INC_FLAGS}
-LDFLAGS  = -lSDL2
+LDFLAGS  = -lSDL2 -lSDL2_image
 
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

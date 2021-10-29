@@ -42,3 +42,4 @@
 *.idb
 *.pdb
 build/MVN
+*.jpg
