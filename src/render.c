@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_surface.h>
 #include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +32,6 @@ void render_size(int w, int h){
 
 void render_surface(SDL_Surface* Surface, SDL_Rect position){
 	Texture = SDL_CreateTextureFromSurface(renderer, Surface);
-	SDL_FreeSurface(Surface);
 	SDL_RenderCopy(renderer, Texture, NULL, &position);
 }
 
@@ -53,7 +53,7 @@ SDL_Rect float_position(SDL_Surface* Surface, float y, float x, float w, float h
 	return position;
 }
 
-SDL_Rect quick_rect(int h, int w, int x, int y){
+SDL_Rect quick_rect(int y, int x, int w, int h){
 	SDL_Rect position;
 	position.h = h;
 	position.w = w;
@@ -62,13 +62,11 @@ SDL_Rect quick_rect(int h, int w, int x, int y){
 	return position;
 }
 
-void render_image(char* filename, SDL_Rect position){
-	render_surface(IMG_Load(filename), position);
+void render_image(SDL_Surface* surface, SDL_Rect position){
+	render_surface(surface, position);
 }
 
-void render_floating_image(char* filename, float y, float x, float w, float h){
-	SDL_Surface* Surface = IMG_Load(filename);
-	render_surface(Surface, float_position(Surface, y, x, w, h));
-	printf("ww :%d", get_window_size().w);
+void render_floating_image(SDL_Surface* surface, float y, float x, float w, float h){
+	render_surface(surface, float_position(surface, y, x, w, h));
 }
 

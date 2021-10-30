@@ -1,0 +1,1 @@
+//int open_script(char scriptName[]);
