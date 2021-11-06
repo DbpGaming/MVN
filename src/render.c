@@ -22,7 +22,7 @@ SDL_Window* get_window(){
 
 void render_init(){
 	SDL_Init(SDL_INIT_EVERYTHING);
-	window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 1000, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, 0);
 }
 
@@ -35,21 +35,21 @@ void render_surface(SDL_Surface* Surface, SDL_Rect position){
 	SDL_RenderCopy(renderer, Texture, NULL, &position);
 }
 
-SDL_Rect get_window_size(){
-	int w, h;
-	SDL_GetWindowSize(window, &w, &h);
-	SDL_Rect window_size;
-	window_size.w = w;
-	window_size.h = h;
+SDL_Point get_window_size(){
+	int x, y;
+	SDL_GetWindowSize(window, &x, &y);
+	SDL_Point window_size;
+	window_size.x = x;
+	window_size.y = y;
 	return window_size;
 }
 
 SDL_Rect float_position(SDL_Surface* Surface, float y, float x, float w, float h){
 	SDL_Rect position;
-	position.h = (h/255 * Surface->h) / 1440 * get_window_size().h * 2;
-	position.y = y/255 * (get_window_size().h) - position.h / 2;
-	position.w = (w/255 * Surface->w) / 1440 * get_window_size().h * 2;
-	position.x = (x/255 * get_window_size().w)-position.w/2;
+	position.h = (h/255 * Surface->h) / Surface->h * get_window_size().y * 2;
+	position.y = y/255 * (get_window_size().y) - position.h / 2;
+	position.w = (w/255 * Surface->w) / Surface->h * get_window_size().y * 2;
+	position.x = (x/255 * get_window_size().x) - position.w / 2;
 	return position;
 }
 

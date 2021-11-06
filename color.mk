@@ -1,0 +1,5 @@
+FLASH = \033[93;5m
+YELLOW = \033[93m
+PURPLE = \033[95m
+RED = \033[91m
+WHITE  = \033[0m
