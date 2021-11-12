@@ -43,3 +43,6 @@
 *.pdb
 build/MVN
 *.jpg
+*.ttf
+*.TTF
+*.bin

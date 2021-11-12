@@ -1,1 +1,1 @@
-//int open_script(char scriptName[]);
+char* open_script(char scriptName[]);

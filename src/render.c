@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "render.h"
 
-SDL_Renderer *renderer;
+SDL_Renderer* renderer;
 SDL_Window* window;
 SDL_Texture* Texture;
 
