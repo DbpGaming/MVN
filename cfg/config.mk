@@ -1,6 +1,6 @@
 TARGET_EXEC := MVN
 CC = gcc
-INC_DIRS := /usr/include config
+INC_DIRS := /usr/include cfg
 STDFLAGS   = -std=c99
 LDFLAGS  = -lSDL2 -lSDL2_image -lSDL2_ttf
 WARNINGFLAGS = -Wall -Wextra -Werror -Wno-unused-variable

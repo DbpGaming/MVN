@@ -1,4 +1,4 @@
-include config/config.mk
+include cfg/config.mk
 include color.mk
 include cco.mk
 default: all
