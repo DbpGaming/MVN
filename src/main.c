@@ -1,53 +1,40 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_surface.h>
-#include <SDL2/SDL_video.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <config.h>
+#include "main.h"
 #include "render.h"
-#include "script.h"
-
-typedef struct image{
-	SDL_Surface* Surface;
-	SDL_Rect position;
-} image;
-
-typedef struct layout{
-	image images[255];
-	char changed;
-} layout;
 
 /*typedef struct script{
 	char* data;
 	char* name;
 } script;*/
 
+char changed;
 layout current;
 char* script;
-int sb = 0;
-SDL_Color testcol = {0, 0, 0, 255};
+u16 si; //script iteration
+u16 sb = 0;
 TTF_Font* font;
-SDL_Surface* text;
 
-char readComm(int i){
-	//i++;
-	//return script[i--];
-	return script[i];
+char GETCURRCMD(){
+	si++;
+	return GETCMD(script, si--);
+}
+
+void dumb_init(){
+	SDL_SetRenderDrawColor(renderer, 255, 128, 255, 255);
+	script = open_script("test.bin");
+	current.images[0].name = "1615350775259small.jpg";
+	current.images[0].pos = quick_rect(128, 128, 121, 121);
+	current.images[1].name = "1615350775259small.jpg";
+	current.images[1].pos = quick_rect(0, 128, 121, 121);
+	current.text1.text = "fuck";
+	current.text1.pos = quick_rect(128, 128, 32, 32);
+	changed = 1;
 }
 
 void game_loop(){
-	SDL_Surface* IMG[255];
-	IMG[0] = IMG_Load("1615350775259small.jpg");
-	current.images[0].Surface = IMG[0];
-	current.images[0].position = quick_rect(128, 128, 121, 121);
-	current.images[1].Surface = IMG[0];
-	current.images[1].position = quick_rect(0, 128, 121, 121);
-	current.changed = 1;
 	for(;;){
 		SDL_Event event;
 		SDL_PollEvent(&event);
-		int quit = 0;
+		u8 quit = 0;
 
 		switch (event.type) {
 			case SDL_QUIT: quit = 1; break;
@@ -55,25 +42,34 @@ void game_loop(){
 		}
 
 		if (quit == 1) break;
-		if (current.changed){
-			SDL_RenderClear(get_renderer());
-			for(int i = 0; current.images[i].position.w != 0; i++)
-				render_floating_image(current.images[i].Surface, current.images[i].position.y, current.images[i].position.x, current.images[i].position.h, current.images[i].position.w);
-			render_floating_image(text, 128, 128, 32, 32);
-			SDL_RenderPresent(get_renderer());
-			current.changed = 0;
+		if (changed){
+			SDL_RenderClear(renderer);
+			for(u8 i = 0; current.images[i].pos.w != 0; i++)
+				render_floating_image_rect(current.images[i].name, current.images[i].pos);
+			render_floating_text_rect(current.text1.text, current.text1.pos);
+			SDL_RenderPresent(renderer);
+			changed = 0;
 		}
 	}
-	SDL_FreeSurface(IMG[0]);
 }
-int main(){
-	SDL_SetRenderDrawColor(get_renderer(), 255, 128, 255, 255);
-	render_init();
+
+void init(){
+	SDL_Init(SDL_INIT_EVERYTHING);
 	TTF_Init();
+	window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 1000, SDL_WINDOW_RESIZABLE);
+	renderer = SDL_CreateRenderer(window, -1, 0);
+	SDL_GetWindowSize(window, &ws.x, &ws.y);
+}
+
+void setup(){
 	font = TTF_OpenFont("ShortBaby.ttf", 64);
-	if (font == NULL) return 204;
-	text = TTF_RenderText_Blended_Wrapped(font, "test", testcol, 100);
-	script = open_script("test.bin");
+	if (font == NULL) fprintf(stderr, FNT_ERR);
+}
+
+int main(){
+	init();
+	setup();
+	dumb_init();
 	game_loop();
 	return 0;
 }
