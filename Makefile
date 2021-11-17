@@ -3,7 +3,7 @@ include color.mk
 include cco.mk
 default: all
 
-BUILD_DIR := ./build
+BUILD_DIR := ./bld
 SRC_DIRS := ./src
 PRINT = printf
 

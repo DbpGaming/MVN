@@ -20,10 +20,10 @@ char GETCURRCMD(){
 
 void dumb_init(){
 	SDL_SetRenderDrawColor(renderer, 255, 128, 255, 255);
-	script = open_script("test.bin");
-	current.images[0].name = "1615350775259small.jpg";
+	script = open_script("scrpt/test.bin");
+	current.images[0].name = "img/1615350775259small.jpg";
 	current.images[0].pos = quick_rect(128, 128, 121, 121);
-	current.images[1].name = "1615350775259small.jpg";
+	current.images[1].name = "img/1615350775259small.jpg";
 	current.images[1].pos = quick_rect(0, 128, 121, 121);
 	current.text1.text = "fuck";
 	current.text1.pos = quick_rect(128, 128, 32, 32);
@@ -62,7 +62,7 @@ void init(){
 }
 
 void setup(){
-	font = TTF_OpenFont("ShortBaby.ttf", 64);
+	font = TTF_OpenFont("fnt/ShortBaby.ttf", 64);
 	if (font == NULL) fprintf(stderr, FNT_ERR);
 }
 
