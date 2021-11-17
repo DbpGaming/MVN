@@ -1,6 +1,6 @@
 include cfg/config.mk
-include color.mk
-include cco.mk
+include mk/color.mk
+include mk/cco.mk
 default: all
 
 BUILD_DIR := ./bld
