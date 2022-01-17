@@ -24,15 +24,17 @@ endif
 
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CFLAGS = $(STDFLAGS) $(OPTFLAGS) $(WARNINGFLAGS) ${INC_FLAGS}
+LINE = __________________________________________________
+SPACE = |                                                  |
 
-# The final build step.
+# The final build step.                 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	@mkdir -p $(BUILD_DIR)
 	@$(CC) $(STATIC) $(OBJS) -o $@ $(LDFLAGS)
 
 # Build step for C source
 $(BUILD_DIR)/%.c.o: %.c
-	@mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)                 
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: all clean
@@ -43,10 +45,10 @@ test: all
 	@$(BUILD_DIR)/$(TARGET_EXEC)
 
 all: $(BUILD_DIR)/$(TARGET_EXEC)
-	@$(PRINT) "$(YELLOW)____________________________________________________$(WHITE)\n"
-	@$(PRINT) "$(YELLOW)|                                                  |$(WHITE)\n"
-	@$(PRINT) "$(YELLOW)|                 $(FLASH)Compile Settings$(WHITE)                 $(YELLOW)|$(WHITE)\n"
-	@$(PRINT) "$(YELLOW)|__________________________________________________|$(WHITE)\n"
+	@$(PRINT) "$(YELLOW)_$(LINE)_\n"
+	@$(PRINT) "$(SPACE)\n"
+	@$(PRINT) "|                 $(FLASH)Compile Settings$(WHITE)                 $(YELLOW)|\n"
+	@$(PRINT) "|$(LINE)|$(WHITE)\n"
 	@$(PRINT) "$(RED)Compiler:      $(PURPLE)$(CC)$(WHITE)\n"
 	@$(PRINT) "$(RED)STD:           $(PURPLE)$(STDFLAGS)$(WHITE)\n"
 	@$(PRINT) "$(RED)Optimizations: $(PURPLE)$(OPTFLAGS)$(WHITE)\n"

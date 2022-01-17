@@ -1,14 +1,24 @@
 #include "render.h"
 #include "main.h"
+#include <SDL2/SDL_pixels.h>
 
 SDL_Renderer* renderer;
 SDL_Window* window;
 SDL_Texture* Texture;
 SDL_Point ws;
+SDL_Point ows;
 
 void render_size(u16 w, u16 h){
 	SDL_SetWindowSize(window, w, h);
 	SDL_GetWindowSize(window, &ws.x, &ws.y);
+}
+
+u8 window_update(){
+	u8 is_different = 0;
+	SDL_GetWindowSize(window, &ws.x, &ws.y);
+	if (ws.x != ows.x || ws.y != ows.y) is_different = 1;
+	ows = ws;
+	return is_different;
 }
 
 void render_surface(SDL_Surface* surf, SDL_Rect pos){
@@ -47,16 +57,15 @@ void render_floating_surface(SDL_Surface* surf, float y, float x, float w, float
 void render_floating_image_rect(char* name, SDL_Rect surf_rect){
 	SDL_Surface* surf = IMG_Load(name);
 	render_floating_surface_rect(surf, surf_rect);
-	SDL_FreeSurface(surf);
+	//SDL_FreeSurface(surf);
 }
 
-void render_floating_text_rect(char* text, SDL_Rect surf_rect){
-	SDL_Color testcol = {0, 0, 0, 255};
-	SDL_Surface* surf = TTF_RenderText_Blended_Wrapped(font, text, testcol, 100);
+void render_floating_text_rect(char* text, SDL_Rect surf_rect, SDL_Colour color){
+	SDL_Surface* surf = TTF_RenderText_Blended_Wrapped(font, text, color, 100);
 	render_floating_surface_rect(surf, surf_rect);
-	SDL_FreeSurface(surf);
+	//SDL_FreeSurface(surf);
 }
 
-void render_floating_text(char* text, u8 y, u8 x, u8 w, u8 h){
-	render_floating_text_rect(text, quick_rect(y,x,w,h));
+void render_floating_text(char* text, u8 y, u8 x, u8 w, u8 h, SDL_Color color){
+	render_floating_text_rect(text, quick_rect(y,x,w,h), color);
 }

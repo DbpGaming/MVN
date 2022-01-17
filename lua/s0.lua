@@ -1,0 +1,8 @@
+print("test")
+load_img(0, "img/bg/imhhw/bg02_01b.png")
+load_img(1, "img/char/chiaki/stand_09_00sout.obj.png")
+set_img(0, 0)
+set_pos(0, 128, 128, 128, 128)
+set_img(1, 1)
+set_pos(1, 128, 64, 121, 121)
+set_text("a")

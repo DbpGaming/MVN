@@ -5,8 +5,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_rect.h>
-#include <config.h>
-#include "script.h"
 #include "types.h"
 
 extern TTF_Font* font;
+extern scene activeScene;
+extern SDL_Surface* images[255];
